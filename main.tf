@@ -1,22 +1,38 @@
-module "eks-cluster" {
-    source                      = "./eks-cluster"
-    availability_zones_count    = var.availability_zones_count
-    project                     = var.project
-    vpc_cidr                    = var.vpc_cidr
-    subnet_cidr_bits            = var.subnet_cidr_bits
-    tags                        = var.tags
+data "aws_eks_cluster_auth" "this" {
+  depends_on = [module.eks_cluster]
+  name = module.eks_cluster.cluster_name
 }
 
 provider kubernetes {
   host     = module.eks_cluster.eks_endpoint
-  token    = module.eks_cluster.eks_token
-  cluster_ca_certificate = module.eks_cluster.eks_ca_certificate
+  token    = data.aws_eks_cluster_auth.this.token
+  cluster_ca_certificate = base64decode(module.eks_cluster.eks_certificate)
 }
 
 provider helm {
   kubernetes {
     host     = module.eks_cluster.eks_endpoint
-    token    = module.eks_cluster.eks_token
-    cluster_ca_certificate = module.eks_cluster.eks_ca_certificate
+    token    = data.aws_eks_cluster_auth.this.token
+    cluster_ca_certificate = base64decode(module.eks_cluster.eks_certificate)
   }
+}
+
+module "eks_cluster" {
+    source                      = "./eks_cluster"
+    availability_zones_count    = var.availability_zones_count
+    project                     = var.project
+    vpc_cidr                    = var.vpc_cidr
+    subnet_cidr_bits            = var.subnet_cidr_bits
+    desired_size                = var.desired_size
+    min_size                    = var.min_size
+    max_size                    = var.max_size
+    tags                        = var.tags
+}
+
+module "karpenter" {
+  source                      = "./karpenter"
+  cluster_name                = module.eks_cluster.cluster_name
+  eks_endpoint                = module.eks_cluster.eks_endpoint
+  oidc_issuer                 = module.eks_cluster.oidc_issuer
+  worker_iam_role_name        = module.eks_cluster.worker_iam_role_name
 }

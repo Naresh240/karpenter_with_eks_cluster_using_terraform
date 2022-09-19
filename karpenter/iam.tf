@@ -1,5 +1,5 @@
 resource "aws_iam_role_policy" "karpenter_contoller" {
-  name = "karpenter-policy-${var.product_domain}"
+  name = "karpenter-policy-${var.cluster_name}"
   role = module.iam_assumable_role_karpenter.iam_role_name
 
   policy = jsonencode({
