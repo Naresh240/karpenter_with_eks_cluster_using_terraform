@@ -3,6 +3,13 @@ data "aws_eks_cluster_auth" "this" {
   name = module.eks_cluster.cluster_name
 }
 
+provider "kubectl" {
+  host                   = module.eks_cluster.eks_endpoint
+  token                  = data.aws_eks_cluster_auth.this.token
+  cluster_ca_certificate = base64decode(module.eks_cluster.eks_certificate)
+  load_config_file       = false
+}
+
 provider kubernetes {
   host     = module.eks_cluster.eks_endpoint
   token    = data.aws_eks_cluster_auth.this.token
@@ -33,6 +40,8 @@ module "karpenter" {
   source                      = "./karpenter"
   cluster_name                = module.eks_cluster.cluster_name
   eks_endpoint                = module.eks_cluster.eks_endpoint
-  oidc_issuer                 = module.eks_cluster.oidc_issuer
+  cluster_oidc_arn            = module.eks_cluster.cluster_oidc_arn
+  cluster_oidc_url            = module.eks_cluster.cluster_oidc_url
   worker_iam_role_name        = module.eks_cluster.worker_iam_role_name
+  karpenter_namespace         = var.karpenter_namespace
 }

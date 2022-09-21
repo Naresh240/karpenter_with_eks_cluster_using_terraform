@@ -14,7 +14,10 @@ output "worker_iam_role_name" {
   value = aws_iam_role.node.name
 }
 
-output "oidc_issuer" {
-  value = aws_eks_cluster.this.identity[0].oidc[0].issuer
+output "cluster_oidc_arn" {
+  value = aws_iam_openid_connect_provider.eks.arn
 }
 
+output "cluster_oidc_url" {
+  value = aws_iam_openid_connect_provider.eks.url
+}

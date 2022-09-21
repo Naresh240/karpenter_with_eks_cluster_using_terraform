@@ -10,12 +10,15 @@ variable "eks_endpoint" {
   type        = string
 }
 
-variable "oidc_issuer" {
+variable "cluster_oidc_arn" {
+  type        = string
+}
+
+variable "cluster_oidc_url" {
   type        = string
 }
 
 variable "karpenter_namespace" {
   description = "The Kubernetes namespace for Karpenter deployment"
   type        = string
-  default     = "karpenter"
 }

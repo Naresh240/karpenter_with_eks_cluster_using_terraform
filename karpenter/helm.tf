@@ -7,7 +7,7 @@ resource "helm_release" "karpenter" {
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.iam_assumable_role_karpenter.iam_role_arn
+    value = aws_iam_role.karpenter_controller.arn
   }
 
   set {
@@ -23,5 +23,5 @@ resource "helm_release" "karpenter" {
   set {
     name  = "aws.defaultInstanceProfile"
     value = aws_iam_instance_profile.karpenter.name
-  }
+  }  
 }
