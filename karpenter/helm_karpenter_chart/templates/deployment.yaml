@@ -100,13 +100,13 @@ spec:
               containerPort: 8081
               protocol: TCP
           livenessProbe:
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
+            initialDelaySeconds: 120
+            timeoutSeconds: 120
             httpGet:
               path: /healthz
               port: http
           readinessProbe:
-            timeoutSeconds: 30
+            timeoutSeconds: 120
             httpGet:
               path: /readyz
               port: http

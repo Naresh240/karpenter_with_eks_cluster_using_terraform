@@ -17,7 +17,7 @@ serviceAccount:
   create: true
   # -- The name of the ServiceAccount to use.
   # If not set and create is true, a name is generated using the fullname template.
-  name: "karpenter"
+  name: ""
   # -- Additional annotations for the ServiceAccount.
   annotations: {}
 serviceMonitor:
@@ -103,11 +103,11 @@ controller:
   # -- Resources for the controller pod.
   resources:
     requests:
-      cpu: 1
-      memory: 1Gi
+      cpu: 100m
+      memory: 50Mi
     limits:
-      cpu: 1
-      memory: 1Gi
+      cpu: 100m
+      memory: 50Mi
   # -- Controller log level, defaults to the global log level
   logLevel: ""
   # -- Controller log encoding, defaults to the global log encoding
@@ -140,11 +140,11 @@ webhook:
   # -- Resources for the webhook pod.
   resources:
     requests:
-      cpu: 200m
-      memory: 100Mi
+      cpu: 100m
+      memory: 50Mi
     limits:
-      cpu: 200m
-      memory: 100Mi
+      cpu: 100m
+      memory: 50Mi
   # -- Webhook log level, defaults to the global log level
   logLevel: ""
   # -- Webhook log encoding, defaults to the global log encoding

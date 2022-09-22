@@ -40,7 +40,6 @@ module "karpenter" {
   source                      = "./karpenter"
   cluster_name                = module.eks_cluster.cluster_name
   eks_endpoint                = module.eks_cluster.eks_endpoint
-  cluster_oidc_arn            = module.eks_cluster.cluster_oidc_arn
   cluster_oidc_url            = module.eks_cluster.cluster_oidc_url
   worker_iam_role_name        = module.eks_cluster.worker_iam_role_name
   karpenter_namespace         = var.karpenter_namespace

@@ -10,10 +10,6 @@ variable "eks_endpoint" {
   type        = string
 }
 
-variable "cluster_oidc_arn" {
-  type        = string
-}
-
 variable "cluster_oidc_url" {
   type        = string
 }
