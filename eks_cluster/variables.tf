@@ -43,3 +43,8 @@ variable "max_size" {
   description = "The number of maximum nodes."
   type        = number
 }
+
+variable "instance_type" {
+  description = "Need to provide type of instance for EKS cluster nodes"
+  type        = list(string)
+}

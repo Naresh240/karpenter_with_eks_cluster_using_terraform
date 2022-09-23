@@ -33,6 +33,7 @@ module "eks_cluster" {
     desired_size                = var.desired_size
     min_size                    = var.min_size
     max_size                    = var.max_size
+    instance_type               = var.instance_type    
     tags                        = var.tags
 }
 

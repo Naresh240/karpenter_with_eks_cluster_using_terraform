@@ -45,7 +45,7 @@ variable "tags" {
 variable "desired_size" {
   description = "The number of desired nodes."
   type        = number
-  default     = 1
+  default     = 2
 }
 
 variable "min_size" {
@@ -63,4 +63,10 @@ variable "max_size" {
 variable "karpenter_namespace" {
   type        = string
   default     = "karpenter"
+}
+
+variable "instance_type" {
+  description = "Need to provide type of instance for EKS cluster nodes"
+  type        = list(string)
+  default     = ["t2.medium"]
 }
